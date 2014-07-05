@@ -3,46 +3,40 @@ using System.Collections;
 
 public class Unit : AliveObject {
 
+	//components
 	public Animation characterAnimation;
-	public Transform groundCheck;
+	public GameObject jumpEffect;
 
+	//Movemenet
+	public Transform groundCheckTop;
+	public Transform groundCheckBottom;
 	public float moveSpeed = 10;
-	
+
+
+	//Jumping
 	public float jumpStrength = 400;
 	protected int numJumpsDone = 0;
 	public int maxNumJumps = 2;
 	protected bool jumpLock = false;
 	protected int jumpTickCount = 0;
 	public int maxJumpTicks = 20;
-	
 	public float airSpeed = 10;
+	public float jumpStrengthOverTimeMod = 1;
 
+	//attacks
 	public Attack[] attacks;
+
+	//animation
 	private bool canAnimate = true;
+	[HideInInspector]
+	public Animator anim;
 
-	public Animator anim;					// Reference to the player's animator component.
-	public GameObject jumpEffect;
 
 
-	public bool canJump{
-		get{
-			if(!jumpLock){
-				if(currentState == UnitState.GROUND || numJumpsDone < maxNumJumps){
-					return true;	
-				}
-			}
-			return false;	
-		}
-	}
-	private Vector3 targetPosition;
 
 	// Use this for initialization
 	protected void Start () {
-		anim = GetComponent<Animator>();
-		targetPosition = transform.position + new Vector3(0,-2.5f,0);
-		if(groundCheck != null){
-			targetPosition = groundCheck.position;
-		}
+		anim = GetComponent<Animator> ();
 	}
 
 	virtual protected void setChildStats(){
@@ -53,13 +47,11 @@ public class Unit : AliveObject {
 		//limitSpeed();
 		checkGround();
 		handleMovementAnimation();
-		if(anim){
-			anim.SetFloat("PlayerMoveSpeed",rigidbody2D.velocity.magnitude);
-		}
 	}
 	private void checkGround(){
-		int layerMask = 1 << LayerMask.NameToLayer("Ground") | 1 << LayerMask.NameToLayer("Ground_Ghost");
-		if(Physics2D.Linecast(transform.position-new Vector3(0,.05f,0), targetPosition, layerMask)){
+		int layerMask = (1 << LayerMask.NameToLayer("Ground")) | (1 << LayerMask.NameToLayer("Ground_Ghost"));
+		//layerMask = 1;
+		if(Physics2D.Linecast(groundCheckTop.position, groundCheckBottom.position, layerMask)){
 			hitGround();
 		}
 	}
@@ -72,6 +64,10 @@ public class Unit : AliveObject {
 			} else {
 				playAnimation("Run");
 			}
+		}
+		
+		if(anim){
+			anim.SetFloat("PlayerMoveSpeed",rigidbody2D.velocity.magnitude);
 		}
 	}
 	
@@ -142,7 +138,7 @@ public class Unit : AliveObject {
 			Instantiate(jumpEffect,transform.position,Quaternion.identity);
 		}
 		jumpTickCount++;
-		strength-= rigidbody2D.velocity.y;
+		strength-= rigidbody2D.velocity.y / jumpStrengthOverTimeMod;
 		if(jumpTickCount > maxJumpTicks){
 			maxOutJump();	
 		}
@@ -154,8 +150,20 @@ public class Unit : AliveObject {
 	private void maxOutJump(){
 		jumpLock = true;
 	}
+	public bool canJump{
+		get{
+			if(!jumpLock){
+				if(currentState == UnitState.GROUND || numJumpsDone < maxNumJumps){
+					return true;	
+				}
+			}
+			return false;	
+		}
+	}
+
 	private void hitGround(){
-		//endJump();
+		Debug.Log ("Hit Ground");
+		endJump();
 		enterGround();
 		numJumpsDone = 0;
 		playAnimation("Jump_End",.35f);

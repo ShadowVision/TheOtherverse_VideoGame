@@ -69,19 +69,14 @@ public class Attack : MonoBehaviour {
 			lastSpawnedItem.transform.position += transform.position;
 			if(spawnAttached){
 				lastSpawnedItem.transform.parent = transform;
-			}else if(!player.facingRight){
-				Vector3 newScale = lastSpawnedItem.transform.localScale;
-				newScale.x *= -1;
-				lastSpawnedItem.transform.localScale = newScale;
-
-
-			}	
+			}
 			Damager damager = lastSpawnedItem.GetComponent<Damager>();
 			if(damager != null){
 				if(!player.facingRight){
 					damager.knockbackAmount.x *= -1;
 				}
 				damager.owner = player;
+				damager.updateDirection(player.facingRight);
 			}
 			Projectile newProjectile = lastSpawnedItem.GetComponent<Projectile>();
 			if(newProjectile != null){

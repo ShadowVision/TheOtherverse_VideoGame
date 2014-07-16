@@ -74,7 +74,7 @@ public class AliveObject : MonoBehaviour {
 		Destroy(gameObject);	
 	}
 	virtual public void kill(){
-		
+		Destroy (gameObject);
 	}
 	//SHIELDING
 	public void startShield(){

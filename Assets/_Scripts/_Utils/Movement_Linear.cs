@@ -7,7 +7,7 @@ public class Movement_Linear : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		if(speed != 0){
-			transform.position += speed * transform.forward;
+			transform.position += speed * transform.right;
 		}
 	}
 }

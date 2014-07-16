@@ -162,7 +162,7 @@ public class Unit : AliveObject {
 	}
 
 	private void hitGround(){
-		Debug.Log ("Hit Ground");
+		//Debug.Log ("Hit Ground");
 		endJump();
 		enterGround();
 		numJumpsDone = 0;

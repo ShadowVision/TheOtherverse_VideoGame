@@ -6,6 +6,7 @@ public class Damager : MonoBehaviour {
 	public float damageAmount;
 	public Vector3 knockbackAmount;
 	public bool deathOnFirstTouch = false;
+	public Vector3 vel = Vector3.zero;
 
 	private GameObject[] alreadyDamaged;
 	private int alreadyDamagedIndex = 0;
@@ -16,7 +17,7 @@ public class Damager : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-	
+		transform.position += vel;
 	}
 	void OnTriggerEnter2D(Collider2D col) {
 		AliveObject unit = col.gameObject.GetComponent<AliveObject>();
@@ -42,5 +43,14 @@ public class Damager : MonoBehaviour {
 	}
 	private void die(){
 		Destroy(gameObject);
+	}
+
+	public void updateDirection(bool facingRight){
+		if(!facingRight){
+			Vector3 newScale = transform.localScale;
+			newScale.x *= -1;
+			transform.localScale = newScale;
+			vel.x *= -1;
+		}	
 	}
 }

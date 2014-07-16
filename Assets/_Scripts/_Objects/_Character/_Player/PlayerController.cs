@@ -2,12 +2,15 @@
 using System.Collections;
 
 public class PlayerController : Unit {
-	public KeyboardInputController input;
 	private bool dropLock = false;
+
+	[HideInInspector]
+	public InputController input;
 
 	// Use this for initialization
 	void Start () {
 		base.Start();
+		input = GetComponent<InputController> ();
 	}
 	
 	// Update is called once per frame

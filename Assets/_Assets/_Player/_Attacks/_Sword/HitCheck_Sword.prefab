@@ -11,7 +11,6 @@ GameObject:
   - 61: {fileID: 6100000}
   - 114: {fileID: 11400004}
   - 114: {fileID: 11400002}
-  - 114: {fileID: 11400000}
   m_Layer: 0
   m_Name: HitCheck_Sword
   m_TagString: Untagged
@@ -69,18 +68,6 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_Size: {x: 4, y: .899999976}
   m_Center: {x: 2, y: .150000006}
---- !u!114 &11400000
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 100000}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 284aa1b70218cdc4b8e7e846f9273f3c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  vel: {x: .200000003, y: 0, z: 0}
 --- !u!114 &11400002
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -106,7 +93,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   owner: {fileID: 0}
   damageAmount: 1
-  knockbackAmount: {x: 50, y: 30, z: 0}
+  knockbackAmount: {x: 10, y: 5, z: 0}
   deathOnFirstTouch: 0
   vel: {x: 0, y: 0, z: 0}
 --- !u!212 &21200000

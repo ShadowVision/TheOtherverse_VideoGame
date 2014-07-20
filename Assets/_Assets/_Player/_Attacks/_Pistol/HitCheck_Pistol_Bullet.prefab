@@ -93,8 +93,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   owner: {fileID: 0}
   damageAmount: 2
-  knockbackAmount: {x: 30, y: 10, z: 0}
-  deathOnFirstTouch: 0
+  knockbackAmount: {x: 20, y: 5, z: 0}
+  deathOnFirstTouch: 1
   vel: {x: 1.5, y: 0, z: 0}
 --- !u!212 &21200000
 SpriteRenderer:

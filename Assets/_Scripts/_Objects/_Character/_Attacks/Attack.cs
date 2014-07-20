@@ -14,11 +14,14 @@ public class Attack : MonoBehaviour {
 	public bool spawnAttached = true;
 	public int friendlyId = -1;
 	// Use this for initialization
-	protected void Start () {
+	protected void Awake () {
 		player = transform.parent.parent.gameObject.GetComponent<PlayerController>();
 		if(player == null){
 			player = transform.parent.parent.parent.gameObject.GetComponent<PlayerController>();
 		}
+	}
+	protected void Start(){
+
 	}
 	
 	// Update is called once per frame

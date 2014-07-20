@@ -41,6 +41,7 @@ public class AliveObject : MonoBehaviour {
 		if(canHit()){
 			takeDamage(amount);
 			knockback(knockBackAmount);
+			SendMessage("playerTakeDamage",amount,SendMessageOptions.DontRequireReceiver);
 		}
 	}
 	public void takeDamage(float amount){

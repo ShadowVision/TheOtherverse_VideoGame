@@ -7,6 +7,7 @@ public class InputController : MonoBehaviour {
 	private float yMovement = 0;
 
 	public string idName = "Player1";
+	[HideInInspector]
 	public bool lockMovement = false;
 
 	// Use this for initialization

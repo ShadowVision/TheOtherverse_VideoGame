@@ -16,7 +16,7 @@ public class KillVolume : MonoBehaviour {
 		collision.collider.gameObject.transform.position = spawnPoint.position;
 		Unit unit = collision.collider.gameObject.GetComponent<Unit>();
 		if (unit){
-			unit.kill();
+			unit.die();
 		}
 	}
 }

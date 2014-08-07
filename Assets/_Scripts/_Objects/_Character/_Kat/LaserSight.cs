@@ -11,6 +11,6 @@ public class LaserSight : LineAttachment {
 	// Update is called once per frame
 	void Update () {
 		base.Update();
-		endTransform.position = KeyboardInputController.mousePosition;
+		endTransform.position = Input.mousePosition;
 	}
 }

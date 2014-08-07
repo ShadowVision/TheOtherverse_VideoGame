@@ -456,10 +456,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentState: 0
   currentDirection: 4
-  lives: -1
+  lives: 3
   health: 3
   invulnerabilityAfterHitInSeconds: .5
   shieldTemplate: {fileID: 11400000, guid: dfff0abd6f6c962469e20ca8ec3a1e60, type: 2}
+  currentLevel: {fileID: 0}
+  spawnEffect: {fileID: 100000, guid: 543bbe4ce806a4710920a9f5a1bdece3, type: 2}
   characterAnimation: {fileID: 0}
   jumpEffect: {fileID: 100002, guid: 67dab1e0cb998ee4ca55c1684de3ac6e, type: 2}
   groundCheckTop: {fileID: 400006}
@@ -486,7 +488,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5e21a6ac0447d41db9c3e4403b0eca64, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  idName: Player2
+  idName: Player1
   lockMovement: 0
 --- !u!212 &21200000
 SpriteRenderer:

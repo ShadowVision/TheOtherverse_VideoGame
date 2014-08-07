@@ -32,8 +32,6 @@ public class Unit : AliveObject {
 	public Animator anim;
 
 
-
-
 	// Use this for initialization
 	protected void Start () {
 		anim = GetComponent<Animator> ();
@@ -193,6 +191,21 @@ public class Unit : AliveObject {
 		currentState = UnitState.GROUND;
 		if(anim){
 			anim.SetBool("OnGround",true);
+		}
+	}
+
+	//SHIELDING
+	public void startShield(){
+		if(!shielding){
+			shielding = true;
+			shield = (AliveObject)Instantiate(shieldTemplate, transform.position, Quaternion.identity);
+			shield.transform.parent = transform;
+		}
+	}
+	public void stopShield(){
+		if(shielding){
+			shielding = false;
+			Destroy(shield.gameObject);
 		}
 	}
 	

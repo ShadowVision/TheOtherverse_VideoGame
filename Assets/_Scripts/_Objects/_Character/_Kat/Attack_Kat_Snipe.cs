@@ -41,13 +41,13 @@ public class Attack_Kat_Snipe : Attack {
 			base.attackRelease ();
 			Destroy(laserSight.gameObject);
 			bullet = (GameObject)Instantiate(bulletTemplate, transform.position, Quaternion.identity);
-			bullet.transform.LookAt(KeyboardInputController.mousePosition);
+			bullet.transform.LookAt(Input.mousePosition);
 			InstantHitBullet hit = bullet.GetComponent<InstantHitBullet>();
 			if(!player.facingRight){
 				hit.knockbackAmount.x *= -1;
 			}
 			hit.owner = player;
-			hit.direction = (KeyboardInputController.mousePosition - transform.position).normalized;
+			hit.direction = (Input.mousePosition - transform.position).normalized;
 			hit.distance = 100;
 			hit.fire();
 		}

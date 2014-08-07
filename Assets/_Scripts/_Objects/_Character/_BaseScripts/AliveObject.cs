@@ -16,20 +16,34 @@ public class AliveObject : MonoBehaviour {
 	//Health
 	public int lives = -1;
 	public float health = 10;
+	private float maxHealth = 10;
+	private HealthBar healthBar;
 	public float invulnerabilityAfterHitInSeconds = .5f;
 	private bool invulnerable = false;
 	//For shielding
-	private bool shielding = false;
+	protected bool shielding = false;
 	public AliveObject shieldTemplate;
-	private AliveObject shield;
+	protected AliveObject shield;
 	//For dodgeing
 	private bool dodeging = false;
-	
+
+	[HideInInspector]
+	public LevelController currentLevel;
+
+	public GameObject spawnEffect;
 	
 	public bool facingRight{
 		get{
 			return transform.localScale.x > 0;
 		}
+	}
+
+	protected void Awake(){
+		maxHealth = health;
+		healthBar = GetComponent<HealthBar> ();
+	}
+	public virtual void spawn(){
+		Instantiate (spawnEffect, transform.position, transform.rotation);
 	}
 	public void move(Vector2 strength){
 		//rigidbody2D.AddForce(strength);
@@ -72,23 +86,25 @@ public class AliveObject : MonoBehaviour {
 		}
 	}
 	public void die(){
-		Destroy(gameObject);	
+		lives--;
+		if (lives > 0) {
+			respawn();
+		}else{
+			kill();
+		}	
+	}
+	virtual public void respawn(){
+		transform.position = currentLevel.getRandomSpawnPoint ().position;
+		rigidbody2D.velocity = Vector3.zero;
+		health = maxHealth;
+		healthBar.init ((int)health);
+		spawn ();
 	}
 	virtual public void kill(){
 		Destroy (gameObject);
 	}
-	//SHIELDING
-	public void startShield(){
-		if(!shielding){
-			shielding = true;
-			shield = (AliveObject)Instantiate(shieldTemplate, transform.position, Quaternion.identity);
-			shield.transform.parent = transform;
-		}
-	}
-	public void stopShield(){
-		if(shielding){
-			shielding = false;
-			Destroy(shield.gameObject);
-		}
+
+	public virtual void spawn(Transform spawnPosition){
+		Instantiate (spawnEffect, transform.position, Quaternion.identity);
 	}
 }

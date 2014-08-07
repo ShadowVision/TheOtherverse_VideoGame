@@ -6,31 +6,43 @@ public class HealthBar : MonoBehaviour {
 
 	public GameObject healthPointTemplate;
 	private GameObject[] points;
+	private GameObject healthPointsHolder;
 
 	// Use this for initialization
 	void Awake () {
 		player = GetComponent<PlayerController> ();
+
+		//create a holder for the health points
+		healthPointsHolder = new GameObject ("HealthPoints");
+		healthPointsHolder.transform.parent = transform;
+		healthPointsHolder.transform.localPosition = new Vector3 (0, 0, 0);
 	}
 	void Start(){
 		init ((int)player.health);
 	}
 
-	public void init(int numberOfLives){
-		GameObject healthPoints = new GameObject ("HealthPoints");
-		healthPoints.transform.parent = transform;
-		healthPoints.transform.localPosition = new Vector3 (0, 0, 0);
-
+	public void init(int numberOfHitPoints){
+		//delete existing health points
+		if(points != null){
+			foreach(GameObject point in points){
+				if(point != null){
+					Destroy(point);
+				}
+			}
+		}
+		//create all of the health points needed
 		Vector3 newPosition = new Vector3(0,0,0);
-		points = new GameObject[numberOfLives];
-		for(int i=0; i<numberOfLives; i++){
+		points = new GameObject[numberOfHitPoints];
+		for(int i=0; i<numberOfHitPoints; i++){
 			GameObject healthPoint = (GameObject)Instantiate(healthPointTemplate);
-			healthPoint.transform.parent = healthPoints.transform;
+			healthPoint.transform.parent = healthPointsHolder.transform;
 			healthPoint.transform.localPosition = newPosition;
 			newPosition.x += 1;
 			points[i] = healthPoint;
 		}
 
-		healthPoints.transform.localPosition = new Vector3 (-numberOfLives/2, 2f, 0);
+		//center health points
+		healthPointsHolder.transform.localPosition = new Vector3 (-numberOfHitPoints/2, 2f, 0);
 	}
 	
 	// Update is called once per frame
@@ -41,6 +53,7 @@ public class HealthBar : MonoBehaviour {
 	public void playerTakeDamage(float amount){
 		int damage = (int)amount;
 		for(int i=(int)player.health; i<player.health+damage; i++){
+			if(i >= 0 && i < points.Length)
 			Destroy(points[i].gameObject);
 		}
 	}

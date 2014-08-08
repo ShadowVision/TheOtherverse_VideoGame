@@ -11,14 +11,20 @@ public class GameMode : MonoBehaviour {
 	void Start () {
 		assets = AssetManager.instance;
 		if(debugMode){
-			level.spawnPlayers();
+
 		}else{
-			//TODO spawn from selected characters in previous menu
+
 		}
+		level.spawnPlayers();
 	}
 	
 	// Update is called once per frame
 	void Update () {
-	
+		if(Input.GetKeyDown(KeyCode.F5)){
+			Application.LoadLevel(Application.loadedLevel);
+		}
+		if(Input.GetKeyDown(KeyCode.Escape)){
+			Application.Quit();
+		}
 	}
 }

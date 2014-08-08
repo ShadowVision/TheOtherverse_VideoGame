@@ -96,6 +96,7 @@ public class AliveObject : MonoBehaviour {
 	virtual public void respawn(){
 		transform.position = currentLevel.getRandomSpawnPoint ().position;
 		rigidbody2D.velocity = Vector3.zero;
+		rigidbody2D.Sleep ();
 		health = maxHealth;
 		healthBar.init ((int)health);
 		spawn ();

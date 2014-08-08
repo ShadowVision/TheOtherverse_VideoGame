@@ -25,6 +25,9 @@ public class LevelController : MonoBehaviour {
 	
 	}
 	public void spawnPlayers(){
+		//TODO spawn characters from however many players are playing
+
+		assets = AssetManager.instance;
 		players = new PlayerController[2]{
 			assets.spawnPlayer(0, getRandomSpawnPoint()),
 			assets.spawnPlayer(1, getRandomSpawnPoint())
@@ -36,6 +39,7 @@ public class LevelController : MonoBehaviour {
 			player.transform.parent = playerHolder.transform;
 			player.currentLevel = (LevelController)this;
 			player.spawn();
+			player.input.idName = "Player" + (i+1);
 
 			t[i] = player.transform;
 			i++;

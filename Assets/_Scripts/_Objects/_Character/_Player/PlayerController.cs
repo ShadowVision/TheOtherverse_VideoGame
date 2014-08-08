@@ -10,6 +10,9 @@ public class PlayerController : Unit {
 	// Use this for initialization
 	void Start () {
 		base.Start();
+	}
+	new protected void Awake(){
+		base.Awake ();
 		input = GetComponent<InputController> ();
 	}
 	
@@ -45,5 +48,6 @@ public class PlayerController : Unit {
 		base.stopShield();
 		input.lockMovement = false;
 	}
+
 	
 }

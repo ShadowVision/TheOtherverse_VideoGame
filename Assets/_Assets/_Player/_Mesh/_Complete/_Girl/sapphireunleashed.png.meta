@@ -1,0 +1,211 @@
+fileFormatVersion: 2
+guid: b40c1bca352914383ac247008ac0470c
+TextureImporter:
+  serializedVersion: 2
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    linearTexture: 0
+    correctGamma: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: .25
+    normalMapFilter: 0
+  isReadable: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 0
+  seamlessCubemap: 0
+  textureFormat: -3
+  maxTextureSize: 2048
+  textureSettings:
+    filterMode: -1
+    aniso: 1
+    mipBias: -1
+    wrapMode: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: .5, y: .5}
+  spritePixelsToUnits: 100
+  alphaIsTransparency: 1
+  textureType: 8
+  buildTargetSettings:
+  - buildTarget: iPhone
+    maxTextureSize: 1024
+    textureFormat: -2
+    compressionQuality: 50
+  spriteSheet:
+    sprites:
+    - name: sapphireunleashed_run01
+      rect:
+        serializedVersion: 2
+        x: 84
+        y: 1001
+        width: 57
+        height: 40
+      alignment: 7
+      pivot: {x: .5, y: 0}
+    - name: sapphireunleashed_jump_air01
+      rect:
+        serializedVersion: 2
+        x: 154
+        y: 940
+        width: 41
+        height: 41
+      alignment: 7
+      pivot: {x: .5, y: 0}
+    - name: sapphireunleashed_intro01
+      rect:
+        serializedVersion: 2
+        x: 199
+        y: 941
+        width: 41
+        height: 37
+      alignment: 7
+      pivot: {x: .5, y: 0}
+    - name: sapphireunleashed_intro02
+      rect:
+        serializedVersion: 2
+        x: 301
+        y: 1000
+        width: 38
+        height: 38
+      alignment: 7
+      pivot: {x: .5, y: 0}
+    - name: sapphireunleashed_intro03
+      rect:
+        serializedVersion: 2
+        x: 349
+        y: 999
+        width: 35
+        height: 52
+      alignment: 7
+      pivot: {x: .5, y: 0}
+    - name: sapphireunleashed_intro04
+      rect:
+        serializedVersion: 2
+        x: 6
+        y: 740
+        width: 103
+        height: 130
+      alignment: 9
+      pivot: {x: .489041448, y: .0868257955}
+    - name: sapphireunleashed_intro05
+      rect:
+        serializedVersion: 2
+        x: 143
+        y: 741
+        width: 102
+        height: 130
+      alignment: 9
+      pivot: {x: .483400971, y: .0955087543}
+    - name: sapphireunleashed_idle01
+      rect:
+        serializedVersion: 2
+        x: 451
+        y: 1004
+        width: 39
+        height: 45
+      alignment: 7
+      pivot: {x: .5, y: 0}
+    - name: sapphireunleashed_jump_intro01
+      rect:
+        serializedVersion: 2
+        x: 122
+        y: 935
+        width: 30
+        height: 59
+      alignment: 7
+      pivot: {x: .5, y: 0}
+    - name: sapphireunleashed_attack_air01
+      rect:
+        serializedVersion: 2
+        x: 244
+        y: 881
+        width: 41
+        height: 48
+      alignment: 9
+      pivot: {x: .449999988, y: 0}
+    - name: sapphireunleashed_attack_air02
+      rect:
+        serializedVersion: 2
+        x: 143
+        y: 884
+        width: 84
+        height: 40
+      alignment: 9
+      pivot: {x: .829999983, y: 0}
+    - name: sapphireunleashed_attack_air03
+      rect:
+        serializedVersion: 2
+        x: 62
+        y: 884
+        width: 72
+        height: 38
+      alignment: 9
+      pivot: {x: .680000007, y: 0}
+    - name: sapphireunleashed_attack_air04
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 885
+        width: 57
+        height: 41
+      alignment: 9
+      pivot: {x: .479999989, y: 0}
+    - name: sapphireunleashed_hit01
+      rect:
+        serializedVersion: 2
+        x: 479
+        y: 631
+        width: 50
+        height: 32
+      alignment: 7
+      pivot: {x: .5, y: 0}
+    - name: sapphireunleashed_fall01
+      rect:
+        serializedVersion: 2
+        x: 344
+        y: 629
+        width: 74
+        height: 33
+      alignment: 7
+      pivot: {x: .5, y: 0}
+    - name: sapphireunleashed_getUp01
+      rect:
+        serializedVersion: 2
+        x: 223
+        y: 635
+        width: 50
+        height: 23
+      alignment: 7
+      pivot: {x: .5, y: 0}
+    - name: sapphireunleashed_shoot01
+      rect:
+        serializedVersion: 2
+        x: 378
+        y: 741
+        width: 38
+        height: 43
+      alignment: 7
+      pivot: {x: .5, y: 0}
+    - name: sapphireunleashed_bullet
+      rect:
+        serializedVersion: 2
+        x: 930
+        y: 612
+        width: 35
+        height: 38
+      alignment: 0
+      pivot: {x: .5, y: .5}
+  spritePackingTag: 
+  userData: 

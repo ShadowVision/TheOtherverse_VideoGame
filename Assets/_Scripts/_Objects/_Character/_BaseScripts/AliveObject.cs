@@ -87,6 +87,7 @@ public class AliveObject : MonoBehaviour {
 	}
 	public void die(){
 		lives--;
+
 		if (lives > 0) {
 			respawn();
 		}else{
@@ -102,7 +103,7 @@ public class AliveObject : MonoBehaviour {
 		spawn ();
 	}
 	virtual public void kill(){
-		Destroy (gameObject);
+		//TODO tell game mode that we died
 	}
 
 	public virtual void spawn(Transform spawnPosition){

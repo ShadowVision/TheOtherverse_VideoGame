@@ -26,7 +26,6 @@ public class Attack_Kat_Snipe : Attack {
 	{
 		cancelShot = false;
 		Invoke("loadGun", timeUntilLoadInSeconds);
-		player.anim.SetBool("Snipe", true);
 		player.input.lockMovement = true;
 	}
 	public void loadGun(){
@@ -53,7 +52,6 @@ public class Attack_Kat_Snipe : Attack {
 		}
 		loaded = false;
 		cancelShot = true;
-		player.anim.SetBool("Snipe", false);
 		player.input.lockMovement = false;
 	}
 }

@@ -4,7 +4,7 @@ using System.Collections;
 public class Unit : AliveObject {
 
 	//components
-	public Animation characterAnimation;
+	public AnimationController anim;
 	public GameObject jumpEffect;
 
 	//Movemenet
@@ -28,13 +28,11 @@ public class Unit : AliveObject {
 
 	//animation
 	private bool canAnimate = true;
-	[HideInInspector]
-	public Animator anim;
 
 
 	// Use this for initialization
 	protected void Start () {
-		anim = GetComponent<Animator> ();
+
 	}
 
 	virtual protected void setChildStats(){
@@ -54,31 +52,11 @@ public class Unit : AliveObject {
 		}
 	}
 	private void handleMovementAnimation(){
-		if(currentState == UnitState.GROUND && canAnimate){
-			if(rigidbody2D.velocity.magnitude <.4f){
-				playAnimation("Idle");
-			} else if(rigidbody2D.velocity.magnitude < 4f){
-				playAnimation("Walk");
-			} else {
-				playAnimation("Run");
-			}
-		}
-		
 		if(anim){
-			anim.SetFloat("PlayerMoveSpeed",rigidbody2D.velocity.magnitude);
+			anim.setMoveSpeed(rigidbody2D.velocity.magnitude);
 		}
 	}
-	
 
-	protected void playAnimation(string anim, float animLockInSeconds=0, float weight=1, float fadeLength = .15f){
-		if(characterAnimation!=null){
-			//characterAnimation.Blend(anim,weight,fadeLength);	
-			characterAnimation.Play(anim);	
-			canAnimate = false;
-			CancelInvoke("unlockAnimation");
-			Invoke("unlockAnimation", animLockInSeconds);	
-		}	
-	}
 	private void unlockAnimation(){
 		canAnimate = true;	
 	}
@@ -132,7 +110,7 @@ public class Unit : AliveObject {
 		}
 		rigidbody2D.velocity = newVel;
 		if(jumpTickCount == 0){
-			playAnimation("Jump_Start");
+			anim.playAnimation(AnimationController.Animations.JUMP);
 			Instantiate(jumpEffect,transform.position,Quaternion.identity);
 		}
 		jumpTickCount++;
@@ -141,8 +119,7 @@ public class Unit : AliveObject {
 			maxOutJump();	
 		}
 		move(new Vector3(0,strength,0));
-		currentState = UnitState.AIR;
-		Invoke ("switchJumpAnimation",.4f);
+		enterAir ();
 
 	}
 	private void maxOutJump(){
@@ -164,17 +141,13 @@ public class Unit : AliveObject {
 		endJump();
 		enterGround();
 		numJumpsDone = 0;
-		playAnimation("Jump_End",.35f);
 	}
 	public void endJump(){
 		jumpLock = false;
 		jumpTickCount = 0;
 		numJumpsDone++;
 	}
-	
-	private void switchJumpAnimation(){
-		playAnimation("Jump_Loop");	
-	}
+
 	public void attackPress(int i){
 		attacks[i].attackPress();
 	}
@@ -185,12 +158,14 @@ public class Unit : AliveObject {
 
 	public void enterAir(){
 		currentState = UnitState.AIR;
-		anim.SetBool("OnGround",false);
+		if(anim){
+			anim.setAir (true);
+		}
 	}
 	public void enterGround(){
 		currentState = UnitState.GROUND;
 		if(anim){
-			anim.SetBool("OnGround",true);
+			anim.setAir (false);
 		}
 	}
 

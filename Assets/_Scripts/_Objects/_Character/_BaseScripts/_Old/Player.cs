@@ -46,6 +46,5 @@ public class Player : Unit {
 		items[i].transform.parent = parent;
 		items[i].transform.localPosition = new Vector3(0,0,0);
 		items[i].transform.localEulerAngles = new Vector3(90,-90,0);
-		playAnimation("Idle");
 	}
 }

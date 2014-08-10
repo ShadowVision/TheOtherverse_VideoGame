@@ -3,9 +3,11 @@ using System.Collections;
 
 public class PlayerController : Unit {
 	private bool dropLock = false;
+	private MeshController mesh; 
 
 	[HideInInspector]
 	public InputController input;
+
 
 	// Use this for initialization
 	void Start () {
@@ -14,6 +16,7 @@ public class PlayerController : Unit {
 	new protected void Awake(){
 		base.Awake ();
 		input = GetComponent<InputController> ();
+		mesh = GetComponent<MeshController> ();
 	}
 	
 	// Update is called once per frame
@@ -27,7 +30,11 @@ public class PlayerController : Unit {
 			}
 		}
 	}
-	
+	public override void spawn ()
+	{
+		base.spawn ();
+		mesh.loadMesh ();
+	}
 	public void dropBelow(){
 		if(currentState== UnitState.GROUND){
 			enterAir();

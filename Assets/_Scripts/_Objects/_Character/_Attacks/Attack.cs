@@ -3,6 +3,7 @@ using System.Collections;
 
 public class Attack : MonoBehaviour {
 	protected PlayerController player;
+	public string attackName = "NoName";
 	public bool attackOnPress = true;
 	public float energyCost = 0;
 	public float cooldownInSeconds = 1;
@@ -56,12 +57,12 @@ public class Attack : MonoBehaviour {
 	}
 	protected void lockPlayer(){
 		if(player && playerLockTimeInSeconds > 0){
-			player.input.lockMovement = true;
+			player.startAttacking(attackName);
 			Invoke("resetPlayerLock", playerLockTimeInSeconds);
 		}
 	}
 	private void resetPlayerLock(){
-		player.input.lockMovement = false;
+		player.stopAttacking (attackName);
 	}
 	private void resetAttack(){
 		canAttack = true;	

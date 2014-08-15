@@ -40,7 +40,7 @@ Transform:
   m_GameObject: {fileID: 100000}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -11.9805927, y: 8.70566559, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: .25, y: .25, z: 1}
   m_Children:
   - {fileID: 400002}
   m_Father: {fileID: 0}
@@ -72,6 +72,8 @@ MonoBehaviour:
   health: 10
   invulnerabilityAfterHitInSeconds: .5
   shieldTemplate: {fileID: 0}
+  currentLevel: {fileID: 0}
+  spawnEffect: {fileID: 0}
 --- !u!212 &21200000
 SpriteRenderer:
   m_ObjectHideFlags: 1

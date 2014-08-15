@@ -443,9 +443,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3f50a132d093149f081c940ce8c31b28, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  clickSound: {fileID: 8300000, guid: 9ecd15c27494e405fa279ea682e8802a, type: 3}
-  hoverSound: {fileID: 8300000, guid: 9ecd15c27494e405fa279ea682e8802a, type: 3}
+  clickSound: {fileID: 0}
+  hoverSound: {fileID: 0}
   levelName: PlayerJoin
+  fadeOutTemplate: {fileID: 100008, guid: ca451c3a4a2d84850aa2964679e8b7ae, type: 2}
 --- !u!61 &877704185
 BoxCollider2D:
   m_ObjectHideFlags: 0

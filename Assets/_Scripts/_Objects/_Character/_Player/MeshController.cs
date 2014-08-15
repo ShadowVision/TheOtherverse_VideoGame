@@ -20,7 +20,7 @@ public class MeshController : MonoBehaviour {
 	//TODO load mesh from saved player slot
 	public void loadMesh(){
 		if(debugMeshTemplate != null){
-			Debug.Log("Loading Mesh");
+			Libonati.destroyAllChildren(meshHolder);
 			GameObject newMesh = (GameObject)Instantiate(debugMeshTemplate);
 			newMesh.transform.parent = meshHolder.transform;
 			newMesh.transform.localPosition = Vector3.zero;

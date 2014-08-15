@@ -22,12 +22,13 @@ public class InputController : MonoBehaviour {
 		if(!lockMovement){
 			player.moveDir(xMovement);
 			if(Input.GetButton(idName + "Jump")){
-				if(yMovement<0){
-					player.dropBelow();
-				}else{
+				//if(yMovement<0){
+				//	player.dropBelow();
+				//}else{
 					player.jump();
-				}
-			} else if(Input.GetButtonUp(idName + "Jump")){
+				//}
+			}if(Input.GetButtonUp(idName + "Jump")){
+				//Debug.Log("Ending Jump");
 				player.endJump();
 			} 
 			if(Input.GetButtonDown(idName + "Shield")){

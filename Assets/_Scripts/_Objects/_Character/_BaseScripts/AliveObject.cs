@@ -53,12 +53,17 @@ public class AliveObject : MonoBehaviour {
 	}
 	public void takeDamage(float amount, Vector3 knockBackAmount){
 		if(canHit()){
-			takeDamage(amount);
-			knockback(knockBackAmount);
-			SendMessage("playerTakeDamage",amount,SendMessageOptions.DontRequireReceiver);
+			if(takeDamage(amount)){
+				knockback(knockBackAmount);
+			}else{
+				amount = 0;
+			}
+			SendMessage("unitTakeDamage",new Vector4(knockBackAmount.x,knockBackAmount.y,knockBackAmount.z,amount),SendMessageOptions.DontRequireReceiver);
 		}
 	}
-	public void takeDamage(float amount){
+	//returns true if it actually does damage
+	public bool takeDamage(float amount){
+		bool tookDamage = false;
 		if(canHit()){
 			if(!shielding){
 				if(health != -1){
@@ -66,13 +71,16 @@ public class AliveObject : MonoBehaviour {
 					if(health <= 0){
 						die();	
 					}
+					tookDamage = true;
 				}
 			}else if(shield != null){
+				tookDamage = false;
 				shield.takeDamage(amount);
 			}
 			invulnerable = true;
 			Invoke("resetInvulnerable", invulnerabilityAfterHitInSeconds);
 		}
+		return tookDamage;
 	}
 	private void resetInvulnerable(){
 		invulnerable = false;

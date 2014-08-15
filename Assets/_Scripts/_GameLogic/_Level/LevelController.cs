@@ -40,9 +40,10 @@ public class LevelController : MonoBehaviour {
 		yield return new WaitForSeconds(.4f);
 
 		assets = AssetManager.instance;
+		Transform[] ts = getRandomSpawnPoints (2);
 		players = new PlayerController[2]{
-			assets.spawnPlayer(0, getRandomSpawnPoint()),
-			assets.spawnPlayer(1, getRandomSpawnPoint())
+			assets.spawnPlayer(0, ts[0]),
+			assets.spawnPlayer(1, ts[1])
 		};
 
 		Transform[] t = new Transform[players.Length];
@@ -68,7 +69,23 @@ public class LevelController : MonoBehaviour {
 		levelCamera.targetTransforms = t;
 		introSequence.stopAnimation ();
 	}
-
+	public Transform[] getRandomSpawnPoints(int number = 2){
+		Transform[] transforms = new Transform[number];
+		for (int i=0; i<number; i++) {
+			bool redo = true;
+			while(redo){
+				transforms[i] = getRandomSpawnPoint();
+				redo = false;
+				for(int j=0; j<i; j++){
+					if(transforms[i].transform.position == transforms[j].transform.position){
+						redo = true;
+						break;
+					}
+				}
+			}
+		}
+		return transforms;
+	}
 	public Transform getRandomSpawnPoint(){
 		return spawnPoints[Random.Range(0,spawnPoints.Length)];
 	}

@@ -3,6 +3,7 @@ using System.Collections;
 
 public class Button_LoadLevel : ClickableButton {
 	public string levelName = "LEVEL_NAME";
+	public GameObject fadeOutTemplate;
 
 	void OnMouseUp(){
 		click ();
@@ -13,6 +14,10 @@ public class Button_LoadLevel : ClickableButton {
 	public override void click ()
 	{
 		base.click ();
+		Instantiate (fadeOutTemplate);
+		Invoke ("nextLevel", 1.5f);
+	}
+	private void nextLevel(){	
 		Application.LoadLevel (levelName);
 	}
 }

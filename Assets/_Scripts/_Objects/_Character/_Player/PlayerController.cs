@@ -2,8 +2,13 @@
 using System.Collections;
 
 public class PlayerController : Unit {
-	private bool dropLock = false;
 	private MeshController mesh; 
+	private bool attacking = false;
+	public bool isAttacking{
+		get{
+			return attacking;
+		}
+	}
 
 	[HideInInspector]
 	public InputController input;
@@ -22,13 +27,6 @@ public class PlayerController : Unit {
 	// Update is called once per frame
 	void Update () {
 		base.Update();
-		if(!dropLock){
-			if(currentState == UnitState.AIR && rigidbody2D.velocity.y > 0){
-				gameObject.layer = LayerMask.NameToLayer("Player_NoGround");
-			}else{
-				gameObject.layer = LayerMask.NameToLayer("Player");
-			}
-		}
 	}
 	public override void spawn ()
 	{
@@ -38,13 +36,8 @@ public class PlayerController : Unit {
 	public void dropBelow(){
 		if(currentState== UnitState.GROUND){
 			enterAir();
-			gameObject.layer = LayerMask.NameToLayer("Player_NoGround");
-			dropLock = true;
-			Invoke("releaseDropLock",.3f);
+			//TODO find the piece of ground we are standing on, then tell it not to collide with us until we land again
 		}
-	}
-	private void releaseDropLock(){
-		dropLock = false;
 	}
 	
 	new public void startShield(){
@@ -56,5 +49,19 @@ public class PlayerController : Unit {
 		input.lockMovement = false;
 	}
 
+	public void startAttacking(string attackName = "NoName"){
+		if(attackName == "Sword"){
+			startShield();
+		}
+		attacking = true;
+		input.lockMovement = true;
+	}
+	public void stopAttacking(string attackName = "NoName"){
+		if(attackName == "Sword"){
+			stopShield();
+		}
+		attacking = false;
+		input.lockMovement = false;
+	}
 	
 }

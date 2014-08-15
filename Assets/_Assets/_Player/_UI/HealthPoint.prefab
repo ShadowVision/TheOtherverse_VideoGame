@@ -9,6 +9,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 400000}
   - 212: {fileID: 21200000}
+  - 111: {fileID: 11100000}
   m_Layer: 0
   m_Name: HealthPoint
   m_TagString: Untagged
@@ -27,6 +28,22 @@ Transform:
   m_LocalScale: {x: 80, y: 80, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
+--- !u!111 &11100000
+Animation:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100000}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Animation: {fileID: 7400000, guid: 2e1afbed61a66450ea507232799ffb97, type: 2}
+  m_Animations:
+  - {fileID: 7400000, guid: 2e1afbed61a66450ea507232799ffb97, type: 2}
+  - {fileID: 7400000, guid: b2b0ce1d905794a5fa59e83e03e2b79c, type: 2}
+  m_WrapMode: 0
+  m_PlayAutomatically: 1
+  m_AnimatePhysics: 0
+  m_CullingType: 0
 --- !u!212 &21200000
 SpriteRenderer:
   m_ObjectHideFlags: 1

@@ -64,7 +64,6 @@ public class CameraFollow_MultiTarget : MonoBehaviour
 		xDist = Mathf.Abs (xMax - xMin);
 		yDist = Mathf.Abs (yMax - yMin);
 		distance = Mathf.Max (xDist, yDist);
-		Debug.Log ("Distance: " + distance);
 
 		debugPoint.position = targetPosition;
 	}

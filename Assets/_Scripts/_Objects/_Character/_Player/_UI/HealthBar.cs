@@ -8,6 +8,10 @@ public class HealthBar : MonoBehaviour {
 	private GameObject[] points;
 	private GameObject healthPointsHolder;
 
+	private bool showingHealthPoints = false;
+
+	public float delayBeforeHideInSeconds = 3f;
+
 	// Use this for initialization
 	void Awake () {
 		player = GetComponent<PlayerController> ();
@@ -43,6 +47,9 @@ public class HealthBar : MonoBehaviour {
 
 		//center health points
 		healthPointsHolder.transform.localPosition = new Vector3 (-numberOfHitPoints/2, 2f, 0);
+
+		showHealthPoints ();
+		Invoke ("hideHealthPoints", delayBeforeHideInSeconds);
 	}
 	
 	// Update is called once per frame
@@ -50,11 +57,33 @@ public class HealthBar : MonoBehaviour {
 	
 	}
 
-	public void playerTakeDamage(float amount){
+	public void unitTakeDamage(Vector4 knockbackPlusDamage){
+		float amount = knockbackPlusDamage.w;
 		int damage = (int)amount;
+		showHealthPoints ();
 		for(int i=(int)player.health; i<player.health+damage; i++){
 			if(i >= 0 && i < points.Length)
-			Destroy(points[i].gameObject);
+				points[i].animation.Play("Sprite_FadeOut");
+		}
+		Invoke ("hideHealthPoints", delayBeforeHideInSeconds);
+	}
+	
+	private void showHealthPoints(){
+		CancelInvoke ("showHealthPoints");
+		if(!showingHealthPoints){
+			for(int i=0; i<player.health; i++){
+				points[i].animation.Play ("Sprite_FadeIn");
+			}
+			showingHealthPoints = true;
+		}
+	}
+	private void hideHealthPoints(){
+		CancelInvoke ("hideHealthPoints");
+		if(showingHealthPoints){
+			for(int i=0; i<player.health; i++){
+				points[i].animation.Play ("Sprite_FadeOut");
+			}
+			showingHealthPoints = false;
 		}
 	}
 }

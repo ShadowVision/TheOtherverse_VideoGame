@@ -22,6 +22,7 @@ public class LevelIntroSequence : MonoBehaviour, AnimationSequence {
 	}
 	public void stopAnimation(){
 		lightboxAnim.Play ("LightboxAnimationOff");
+		effectsCamera.enabled = false;
 	}
 	public void stepAnimation(){
 		playFocusStrip ();

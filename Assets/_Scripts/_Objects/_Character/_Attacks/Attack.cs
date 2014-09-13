@@ -29,6 +29,9 @@ public class Attack : MonoBehaviour {
 	protected void Update () {
 	
 	}
+	virtual public void reset(){
+
+	}
 	virtual public void attackPress(){
 		if(attackOnPress){
 			attack ();

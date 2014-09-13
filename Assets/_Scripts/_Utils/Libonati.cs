@@ -8,7 +8,7 @@ public class Libonati : MonoBehaviour {
 		mousePosition.z = -Camera.main.transform.position.z;
 		return Camera.main.ScreenToWorldPoint(mousePosition);	
 	}
-	
+
 	//Text Modification
 	static public string padInt(int value, int numberOfDigits){
 		return value.ToString ("D" + numberOfDigits.ToString ());

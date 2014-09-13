@@ -11,7 +11,7 @@ public class Reflector : MonoBehaviour {
 	}
 	public void unitTakeDamage (Vector4 knockbackPlusDamage){
 		if(player.isAttacking){
-			Debug.Log ("CLASH. Damage: " + knockbackPlusDamage);
+			//Debug.Log ("CLASH. Damage: " + knockbackPlusDamage);
 			Vector3 knockback = new Vector3(knockbackPlusDamage.x,knockbackPlusDamage.y,knockbackPlusDamage.z);
 			player.knockback (knockback*10);
 			Instantiate(clashEffectTemplate,transform.position,transform.rotation);

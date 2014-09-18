@@ -13,4 +13,5 @@ public class PlayerStats {
 	public float jumpStrengthOverTimeMod = 2;
 	public int maxJumpTicks = 10;
 	public int maxNumberOfJumps = 2;
+	public int numberOfBulletsPerLife = 3;
 }

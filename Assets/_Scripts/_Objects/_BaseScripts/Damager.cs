@@ -23,12 +23,21 @@ public class Damager : MonoBehaviour {
 		AliveObject unit = col.gameObject.GetComponent<AliveObject>();
 		hitUnit(unit);
 	}
+	void OnCollisionEnter2D(Collision2D coll){
+		if(deathOnFirstTouch){
+			die ();
+		}
+	}
+
 	protected void hitUnit(AliveObject unit){
 		if(unit != null && unit != owner && !alreadyHit(unit.gameObject)){
+			Debug.Log("Dealing Damage: " + damageAmount);
 			unit.takeDamage(owner,damageAmount,knockbackAmount);
 			alreadyDamaged[alreadyDamagedIndex] = unit.gameObject;
 			alreadyDamagedIndex++;
-			if(deathOnFirstTouch){
+		}
+		if(deathOnFirstTouch){
+			if(unit == null || unit != owner){
 				die();
 			}
 		}

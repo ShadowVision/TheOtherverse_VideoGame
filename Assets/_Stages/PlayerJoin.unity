@@ -2050,7 +2050,7 @@ MonoBehaviour:
   - {fileID: 254289779}
   - {fileID: 1147263157}
   readyEffect: {fileID: 100008, guid: ca451c3a4a2d84850aa2964679e8b7ae, type: 2}
-  nextLevelName: Game
+  nextLevelName: HonorableDeathMatch
 --- !u!1 &1838236878
 GameObject:
   m_ObjectHideFlags: 0

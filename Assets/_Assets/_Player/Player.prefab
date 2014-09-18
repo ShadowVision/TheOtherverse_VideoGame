@@ -93,7 +93,6 @@ GameObject:
   - 114: {fileID: 11400002}
   - 114: {fileID: 11400004}
   - 114: {fileID: 11400008}
-  - 114: {fileID: 11400010}
   m_Layer: 8
   m_Name: Player
   m_TagString: Untagged
@@ -251,7 +250,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 100000}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6e2c9058c9d14445b9413ac28ebb53ee, type: 3}
+  m_Script: {fileID: 11500000, guid: c3fa799ae751d43899a128c555b41376, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   attackName: Sword
@@ -264,7 +263,11 @@ MonoBehaviour:
   - {fileID: 100000, guid: 711164abe4fb67c45a2e0ccbc3ba0f15, type: 2}
   spawnAttached: 1
   friendlyId: -1
+  maxBullets: 0
   bullets: -1
+  minDamage: 1
+  maxDamage: 4
+  chargeTimeInSeconds: 1
 --- !u!114 &11400002
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -300,11 +303,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 100014}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6e2c9058c9d14445b9413ac28ebb53ee, type: 3}
+  m_Script: {fileID: 11500000, guid: d7945d124439c44c7a3fa144d0e8ee31, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   attackName: Bullet
-  attackOnPress: 1
+  attackOnPress: 0
   energyCost: 0
   cooldownInSeconds: .150000006
   playerLockTimeInSeconds: .100000001
@@ -313,6 +316,7 @@ MonoBehaviour:
   - {fileID: 100006, guid: 3ac87b03533a94cf2ae729362b573191, type: 2}
   spawnAttached: 0
   friendlyId: -1
+  maxBullets: 0
   bullets: -1
 --- !u!114 &11400008
 MonoBehaviour:
@@ -326,19 +330,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   clashEffectTemplate: {fileID: 100006, guid: c252a9ca23725438aa4a46d2312a949c, type: 2}
---- !u!114 &11400010
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 100024}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 396f9a92d8e494e41891e998332bfb0b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  showKeyInput: 0
-  keys: 000000000000000000000000000000000000000000000000
 --- !u!114 &11400014
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -358,6 +349,7 @@ MonoBehaviour:
   shieldTemplate: {fileID: 11400000, guid: dfff0abd6f6c962469e20ca8ec3a1e60, type: 2}
   currentLevel: {fileID: 0}
   spawnEffect: {fileID: 100000, guid: 543bbe4ce806a4710920a9f5a1bdece3, type: 2}
+  lastDamager: {fileID: 0}
   anim: {fileID: 0}
   jumpEffect: {fileID: 100002, guid: 67dab1e0cb998ee4ca55c1684de3ac6e, type: 2}
   groundCheckTop: {fileID: 400006}
@@ -375,6 +367,8 @@ MonoBehaviour:
   input: {fileID: 0}
   dodgeTimeInSeconds: .25
   dodgeDistance: 5
+  level: {fileID: 0}
+  game: {fileID: 0}
 --- !u!114 &11400016
 MonoBehaviour:
   m_ObjectHideFlags: 1

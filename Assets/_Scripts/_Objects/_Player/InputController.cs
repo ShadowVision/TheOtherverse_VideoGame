@@ -19,6 +19,9 @@ public class InputController : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
+		if(Input.anyKeyDown){
+//			Debug.Log("Input: " + Input.inputString);
+		}
 		xMovement = Input.GetAxis(idName + "Horizontal");
 		yMovement = Input.GetAxis(idName + "Vertical");
 		dir = new Vector3 (xMovement, yMovement, 0).normalized;

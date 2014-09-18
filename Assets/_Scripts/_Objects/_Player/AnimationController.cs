@@ -33,7 +33,9 @@ public class AnimationController : MonoBehaviour {
 
 	}
 	public void setMoveSpeed(float newSpeed){
-		anim.SetFloat("Vel",newSpeed);
+		if(anim!=null){
+			anim.SetFloat("Vel",newSpeed);
+		}
 	}
 	public void setAir(bool inAir){
 		anim.SetBool ("InAir", inAir);

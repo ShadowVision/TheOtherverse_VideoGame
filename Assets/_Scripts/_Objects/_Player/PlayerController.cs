@@ -40,6 +40,7 @@ public class PlayerController : Unit {
 		jumpStrength = newStats.jumpStrength;
 		jumpStrengthOverTimeMod = newStats.jumpStrengthOverTimeMod;
 		maxJumpTicks = newStats.maxJumpTicks;
+		attacks [1].maxBullets = attacks [1].bullets = newStats.numberOfBulletsPerLife;
 	}
 
 

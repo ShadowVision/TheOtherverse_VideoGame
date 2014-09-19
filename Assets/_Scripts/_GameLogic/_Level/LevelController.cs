@@ -39,11 +39,12 @@ public class LevelController : MonoBehaviour {
 
 		//init players
 		assets = AssetManager.instance;
-		Transform[] ts = getRandomSpawnPoints (2);
-		players = new PlayerController[2]{
-			assets.spawnPlayer(0, ts[0]),
-			assets.spawnPlayer(1, ts[1])
-		};
+		Transform[] ts = getRandomSpawnPoints (STATS.numberOfPlayers);
+		players = new PlayerController[STATS.numberOfPlayers];
+		for (int i=0; i<STATS.numberOfPlayers; i++)
+		{
+			players[i] = assets.spawnPlayer(i, ts[i]);
+		}
 
 		//run the intro animation for players spawning
 		StartCoroutine ("SpawnEachPlayer");

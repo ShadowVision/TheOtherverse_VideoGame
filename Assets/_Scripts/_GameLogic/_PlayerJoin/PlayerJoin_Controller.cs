@@ -22,7 +22,7 @@ public class PlayerJoin_Controller : MonoBehaviour {
 	void Update () {
 		//check for player start buttons
 		for(int i=0; i<boxes.Length; i++){
-			if(Input.GetButtonUp("Player"+(i+1)+"Start")){
+			if(cInput.GetButtonUp(i+"Start")){
 				boxes[i].pressStart();
 			}
 		}

@@ -7,9 +7,8 @@ public class InputController : MonoBehaviour {
 	private float xMovement = 0;
 	private float yMovement = 0;
 	private Dictionary<string,int> key;
-	private custom_inputs input;
 
-	public string idName = "Player1";
+	public int playerId = 0;
 	public int joystickNumber = 0;
 	[HideInInspector]
 	public bool lockMovement = false;
@@ -22,31 +21,26 @@ public class InputController : MonoBehaviour {
 
 	}
 	void Awake(){
-		input = GetComponent<custom_inputs> ();
-		key = new Dictionary<string,int> ();
-		key.Add ("Start",0);
-		key.Add ("Jump",1);
-		key.Add ("Block",2);
-		key.Add ("Dodge",3);
-		key.Add ("Melee",4);
-		key.Add ("Ranged",5);
 	}
 	public bool keyDown(string name){
-		return input.isInputDown [key [name]];
+		return cInput.GetButtonDown (playerId+name);
+	}
+	public bool keyHeldDown(string name){
+		return cInput.GetButton (playerId+name);
 	}
 	public bool keyUp(string name){
-		return input.isInputUp [key [name]];
+		return cInput.GetButtonUp (playerId+name);
 	}
 	// Update is called once per frame
 	void Update () {
 		//xMovement = Input.GetAxis(idName + "Horizontal");
 		//yMovement = Input.GetAxis(idName + "Vertical");
-		xMovement = Input.GetAxis(idName + "Horizontal");
-		yMovement = Input.GetAxis(idName + "Vertical");
+		xMovement = cInput.GetAxis(playerId+"HorizontalMovement");
+		yMovement = cInput.GetAxis(playerId+"VerticalMovement");
 		dir = new Vector3 (xMovement, yMovement, 0).normalized;
 		if(!lockMovement){
 			player.moveDir(xMovement);
-			if(keyDown("Jump")){
+			if(keyHeldDown("Jump")){
 				//if(yMovement<0){
 				//	player.dropBelow();
 				//}else{
@@ -56,11 +50,11 @@ public class InputController : MonoBehaviour {
 				player.endJump();
 			} 
 			//Shielding
-			if(keyDown("Shield")){
+			if(keyDown("Block")){
 				player.shield();
 			}
 			//Dodgeing
-			if(keyDown(idName + "Dodge")){
+			if(keyDown("Dodge")){
 				player.dodge();
 			}
 		}

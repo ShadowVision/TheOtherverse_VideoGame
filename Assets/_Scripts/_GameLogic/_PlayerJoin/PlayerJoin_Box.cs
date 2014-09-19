@@ -11,7 +11,7 @@ public class PlayerJoin_Box : MonoBehaviour {
 	public PlayerJoin_Controller controller;
 
 	public GameObject[] stages;
-	public string idName = "Player1";
+	public int id = 0;
 	
 	private int currentState = 0;
 
@@ -51,7 +51,7 @@ public class PlayerJoin_Box : MonoBehaviour {
 				player.transform.parent = levelHolder;
 				player.transform.localPosition = Vector3.zero;
 				player.spawn();
-				player.input.idName = idName;
+				player.input.playerId = 1;
 			}
 			
 			Libonati.hideAll(stages[0]);

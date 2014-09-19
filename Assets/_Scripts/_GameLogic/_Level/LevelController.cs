@@ -64,7 +64,7 @@ public class LevelController : MonoBehaviour {
 			player.transform.parent = playerHolder.transform;
 			player.currentLevel = (LevelController)this;
 			player.game = gameMode;
-			player.input.idName = "Player" + (i+1);
+			player.input.playerId = i;
 			player.spawn();
 			player.input.enabled = false;
 

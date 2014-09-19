@@ -6,4 +6,6 @@ public class STATS : MonoBehaviour {
 		XBOX,
 		MOUSE
 	}
+
+	public static int numberOfPlayers = 0;
 }

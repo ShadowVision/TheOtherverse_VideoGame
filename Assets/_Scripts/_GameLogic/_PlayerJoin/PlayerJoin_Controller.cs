@@ -31,14 +31,18 @@ public class PlayerJoin_Controller : MonoBehaviour {
 	//each time a player locks in
 	public void playerReady(){
 		bool allReady = true;
+		STATS.numberOfPlayers = 0;
 		foreach(PlayerJoin_Box box in boxes){
-			if(!box.ready){
-				allReady = false;
-				break;
+			if(box.active){
+				STATS.numberOfPlayers++;
+				if(!box.ready){
+					allReady = false;
+					break;
+				}
 			}
 		}
 
-		if(allReady){
+		if(STATS.numberOfPlayers > 1 && allReady){
 			finish();
 		}else{
 

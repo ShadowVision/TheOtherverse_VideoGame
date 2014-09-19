@@ -5,12 +5,9 @@ public class Attack_AimedLinear : Attack {
 	private Vector3 savedKnockback;
 	private	Damager dmg;
 
-	private int maxBullets = 0;
-	public int bullets = 5;
 
 	new void Awake(){
 		base.Awake ();
-		maxBullets = bullets;
 	}
 	// Use this for initialization
 	void Start () {

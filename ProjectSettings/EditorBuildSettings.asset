@@ -13,3 +13,5 @@ EditorBuildSettings:
     path: Assets/_Stages/_GameModes/HonorableDeathMatch.unity
   - enabled: 1
     path: Assets/_Stages/GameOverScreen.unity
+  - enabled: 1
+    path: Assets/_Stages/_GameModes/MegaBlastBattle.unity

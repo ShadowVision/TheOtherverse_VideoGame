@@ -14,12 +14,18 @@ public class Attack : MonoBehaviour {
 	protected bool canAttack = true;
 	public bool spawnAttached = true;
 	public int friendlyId = -1;
+
+	[HideInInspector]
+	public int maxBullets = 0;
+	public int bullets = -1;
+
 	// Use this for initialization
 	protected void Awake () {
 		player = transform.parent.parent.gameObject.GetComponent<PlayerController>();
 		if(player == null){
 			player = transform.parent.parent.parent.gameObject.GetComponent<PlayerController>();
 		}
+		maxBullets = bullets;
 	}
 	protected void Start(){
 

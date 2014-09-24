@@ -17,13 +17,14 @@ public class AliveObject : MonoBehaviour {
 	public int lives = -1;
 	public float health = 10;
 	protected float maxHealth = 10;
+	public float respawnDelayInSeconds = 3;
 	private HealthBar healthBar;
 	public float invulnerabilityAfterHitInSeconds = .5f;
 	private bool invulnerable = false;
 	//For shielding
 	protected bool shielding = false;
-	public AliveObject shieldTemplate;
-	protected AliveObject shield;
+	public Shield shieldTemplate;
+	protected Shield shield;
 	//For dodgeing
 	protected bool dodgeing = false;
 
@@ -35,8 +36,14 @@ public class AliveObject : MonoBehaviour {
 
 	private int numberOfKills = 0;
 	[HideInInspector]
-	public AliveObject lastDamager;
-	
+	public Damager lastDamager;
+	private bool isDead = false;
+
+	public bool dead{
+		get{
+			return isDead;
+		}
+	}
 	public bool facingRight{
 		get{
 			return transform.localScale.x > 0;
@@ -51,13 +58,17 @@ public class AliveObject : MonoBehaviour {
 		currentLevel = LevelController.instance;
 	}
 	public virtual void spawn(){
+		rigidbody2D.WakeUp ();
 		Instantiate (spawnEffect, transform.position, transform.rotation);
+		isDead = false;
 	}
 	public void move(Vector2 strength){
-		//rigidbody2D.AddForce(strength);
-		Vector2 newVel = rigidbody2D.velocity;
-		newVel += strength;
-		rigidbody2D.velocity = newVel;
+		if(rigidbody2D != null){
+			//rigidbody2D.AddForce(strength);
+			Vector2 newVel = rigidbody2D.velocity;
+			newVel += strength;
+			rigidbody2D.velocity = newVel;
+		}
 	}
 	
 	public virtual void scoreKill(){
@@ -67,24 +78,24 @@ public class AliveObject : MonoBehaviour {
 	public int getNumberOfKills(){
 		return numberOfKills;
 	}
-	public void takeDamage(AliveObject owner, float amount, Vector3 knockBackAmount){
+	public void takeDamage(Damager dmg, float amount, Vector3 knockBackAmount){
 		if(canHit()){
-			if(takeDamage(amount)){
+			if(takeDamage(dmg)){
 				knockback(knockBackAmount);
-				lastDamager = owner;
+				lastDamager = dmg;
 			}else{
 				amount = 0;
 			}
-			SendMessage("unitTakeDamage",new Vector4(knockBackAmount.x,knockBackAmount.y,knockBackAmount.z,amount),SendMessageOptions.DontRequireReceiver);
+			SendMessage("unitTakeDamage",dmg,SendMessageOptions.DontRequireReceiver);
 		}
 	}
 	//returns true if it actually does damage
-	public bool takeDamage(float amount){
+	public bool takeDamage(Damager dmg){
 		bool tookDamage = false;
 		if(canHit()){
 			if(!shielding){
 				if(health != -1){
-					health -= amount;
+					health -= dmg.damageAmount;
 					if(health <= 0){
 						die();	
 					}
@@ -92,7 +103,7 @@ public class AliveObject : MonoBehaviour {
 				}
 			}else if(shield != null){
 				tookDamage = false;
-				shield.takeDamage(amount);
+				shield.getHit(dmg);
 			}
 			invulnerable = true;
 			Invoke("resetInvulnerable", invulnerabilityAfterHitInSeconds);
@@ -103,25 +114,29 @@ public class AliveObject : MonoBehaviour {
 		invulnerable = false;
 	}
 	public bool canHit(){
-		return (!dodgeing && !invulnerable);
+		return (!dodgeing && !invulnerable && !isDead);
 	}
 	public void knockback(Vector3 amount){
 		if(!shielding){
 			move(amount);
 		}
 	}
-	public void die(){
+	protected virtual void die(){
 		lives--;
-		if(lastDamager){
-			lastDamager.scoreKill();
+		isDead = true;
+		if(lastDamager != null){
+			lastDamager.owner.owner.scoreKill();
 		}
 		if (lives > 0) {
-			respawn();
+			triggerRespawn();
 		}else{
-			kill();
+			permaDie();
 		}	
 	}
-	virtual public void respawn(){
+	virtual protected void triggerRespawn(){
+		Invoke ("respawn", respawnDelayInSeconds);
+	}
+	virtual protected void respawn(){
 		if(currentLevel != null){
 			transform.position = currentLevel.getRandomSpawnPoint ().position;
 		}
@@ -131,11 +146,16 @@ public class AliveObject : MonoBehaviour {
 		healthBar.init ((int)health);
 		spawn ();
 	}
-	virtual public void kill(){
-
+	virtual protected void permaDie(){
 	}
 
 	public virtual void spawn(Transform spawnPosition){
 		Instantiate (spawnEffect, transform.position, Quaternion.identity);
+	}
+
+	public void forceDie(){
+		if(!isDead){
+			die ();
+		}
 	}
 }

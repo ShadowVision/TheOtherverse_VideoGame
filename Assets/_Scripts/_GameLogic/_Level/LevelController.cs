@@ -15,7 +15,10 @@ public class LevelController : MonoBehaviour {
 	public Transform[] spawnPoints;
 	[HideInInspector]
 	public GameMode gameMode;
-	
+	public int defaultNumberOfPlayers = 2;
+
+
+	public Color[] playerColors;
 	void Awake(){
 		instance = (LevelController)this;
 		playerHolder = new GameObject ("Players");
@@ -38,6 +41,9 @@ public class LevelController : MonoBehaviour {
 		//TODO spawn characters from however many players are playing
 
 		//init players
+		if(STATS.numberOfPlayers == 0){
+			STATS.numberOfPlayers = defaultNumberOfPlayers;
+		}
 		assets = AssetManager.instance;
 		Transform[] ts = getRandomSpawnPoints (STATS.numberOfPlayers);
 		players = new PlayerController[STATS.numberOfPlayers];
@@ -68,6 +74,7 @@ public class LevelController : MonoBehaviour {
 			player.input.playerId = i;
 			player.spawn();
 			player.input.enabled = false;
+			player.setColor(playerColors[i]);
 
 			//set camera to focus on player
 			levelCamera.targetTransforms = new Transform[1]{player.transform};

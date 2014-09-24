@@ -88,7 +88,7 @@ public class Attack : MonoBehaviour {
 				if(!player.facingRight){
 					damager.knockbackAmount.x *= -1;
 				}
-				damager.owner = player;
+				damager.owner = (Attack)this;
 				damager.updateDirection(player.facingRight);
 			}
 			Projectile newProjectile = lastSpawnedItem.GetComponent<Projectile>();
@@ -96,6 +96,11 @@ public class Attack : MonoBehaviour {
 				newProjectile.friendlyId = friendlyId;	
 				//newProjectile.owner = player;	
 			}
+		}
+	}
+	public AliveObject owner{
+		get{
+			return player;
 		}
 	}
 }

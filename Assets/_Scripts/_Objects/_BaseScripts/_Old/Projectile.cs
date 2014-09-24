@@ -44,7 +44,7 @@ public class Projectile : FreeObject {
 	private void damage(GameObject target){
 		Unit hitUnit = (Unit) target.GetComponent("Unit");	
 		if(hitUnit != null && hitUnit.canHit()){
-			hitUnit.takeDamage(damageAmount);	
+			//hitUnit.takeDamage(damageAmount);	
 			hitUnit.knockback(vel * knockbackAmount);
 		}
 		

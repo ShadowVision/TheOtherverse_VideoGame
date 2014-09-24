@@ -13,12 +13,9 @@ public class KillVolume : MonoBehaviour {
 	
 	}
 	void OnCollisionEnter2D(Collision2D collision) {
-		if(collision.collider != null){
-			collision.collider.gameObject.transform.position = spawnPoint.position;
-		}
 		Unit unit = collision.collider.gameObject.GetComponent<Unit>();
 		if (unit){
-			unit.die();
+			unit.forceDie();
 		}
 	}
 }

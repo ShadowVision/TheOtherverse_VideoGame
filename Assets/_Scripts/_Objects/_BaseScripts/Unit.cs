@@ -22,6 +22,8 @@ public class Unit : AliveObject {
 	public int maxJumpTicks = 20;
 	public float airSpeed = 10;
 	public float jumpStrengthOverTimeMod = 1;
+	protected Vector3 jumpDirModifier = Vector3.zero;
+	private bool jumping = false;
 
 	//attacks
 	public Attack[] attacks;
@@ -29,7 +31,6 @@ public class Unit : AliveObject {
 	//animation
 	private bool canAnimate = true;
 
-	private bool jumping = false;
 
 
 	// Use this for initialization
@@ -102,11 +103,13 @@ public class Unit : AliveObject {
 	
 	public void jump(){
 		if(canJump){
-			jumping = true;
 			jump (jumpStrength);
 		}
 	}
+	protected virtual void childJump(float strength){}
 	public void jump(float strength){
+		jumping = true;
+		childJump(jumpStrength);
 		Vector2 newVel = rigidbody2D.velocity;
 		if(newVel.y <0){
 			newVel.y = 0;
@@ -124,6 +127,8 @@ public class Unit : AliveObject {
 			maxOutJump();	
 		}
 		move(new Vector3(0,strength,0));
+		//rigidbody2D.AddForce(jumpDirModifier);
+		jumpDirModifier = Vector3.zero;
 		enterAir ();
 	}
 	private void maxOutJump(){
@@ -140,7 +145,7 @@ public class Unit : AliveObject {
 		}
 	}
 
-	private void hitGround(){
+	protected virtual void hitGround(){
 		//Debug.Log ("Hit Ground");
 		endJump();
 		enterGround();
@@ -162,7 +167,7 @@ public class Unit : AliveObject {
 		attacks[i].attackRelease();
 	}
 
-	public override void respawn ()
+	protected override void respawn ()
 	{
 		base.respawn ();
 		foreach(Attack att in attacks){
@@ -187,7 +192,7 @@ public class Unit : AliveObject {
 	protected void startShield(){
 		if(!shielding){
 			shielding = true;
-			shield = (AliveObject)Instantiate(shieldTemplate, transform.position, Quaternion.identity);
+			shield = (Shield)Instantiate(shieldTemplate, transform.position, Quaternion.identity);
 			shield.transform.parent = transform;
 		}
 	}

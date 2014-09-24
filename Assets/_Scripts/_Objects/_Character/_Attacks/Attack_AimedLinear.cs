@@ -2,27 +2,23 @@
 using System.Collections;
 
 public class Attack_AimedLinear : Attack {
-	private Vector3 savedKnockback;
+	protected Vector3 savedKnockback;
 	private	Damager dmg;
 
+	protected Unit.Direction dir = Unit.Direction.NONE;
 
 	new void Awake(){
 		base.Awake ();
+		savedKnockback = selfknockback;
 	}
 	// Use this for initialization
-	void Start () {
+	new void Start () {
 		base.Start ();
-		savedKnockback = selfknockback;
 	}
 	public override void reset ()
 	{
 		base.reset ();
 		bullets = maxBullets;
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	
 	}
 
 	public override void attack ()
@@ -32,7 +28,11 @@ public class Attack_AimedLinear : Attack {
 				bullets--;
 			}
 			dmg = null;
-			switch(player.currentDirection){
+			Unit.Direction newDir = dir;
+			if(newDir == AliveObject.Direction.NONE){
+				newDir = player.currentDirection;
+			}
+			switch(newDir){
 			case Unit.Direction.FORWARD:
 			case Unit.Direction.BACK:
 			case Unit.Direction.NONE:
@@ -62,6 +62,7 @@ public class Attack_AimedLinear : Attack {
 				//}
 				break;
 			}
+
 		}
 	}
 }

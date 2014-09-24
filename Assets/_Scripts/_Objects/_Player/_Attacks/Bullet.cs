@@ -2,10 +2,20 @@
 using System.Collections;
 
 public class Bullet : AliveObject {
+	Damager dmg;
 
-	public void unitTakeDamage(Vector4 knockbackPlusDamage){
-		float x = rigidbody2D.velocity.x;
-		float y = rigidbody2D.velocity.y;
+	new void Awake(){
+		base.Awake ();
+		dmg = GetComponent<Damager> ();
+	}
+	public void Update(){
+
+	}
+
+	public void unitTakeDamage(Damager dmg){
+		Debug.Log ("Bullet taking damage");
+		float x = dmg.vel.x;
+		float y = dmg.vel.y;
 		float yAbs = Mathf.Abs (y);
 		float xAbs = Mathf.Abs (x);
 		if(yAbs > xAbs){
@@ -21,7 +31,7 @@ public class Bullet : AliveObject {
 				currentDirection = Direction.FORWARD;
 			}
 		}
-		Vector3 newVel = rigidbody2D.velocity;
+		Vector3 newVel = dmg.vel;
 		switch(currentDirection){
 		case Direction.FORWARD:
 			newVel.x *= -1;
@@ -31,6 +41,6 @@ public class Bullet : AliveObject {
 			newVel.y *= -1;
 			break;
 		}
-		rigidbody2D.velocity = newVel;
+		dmg.vel = newVel;
 	}
 }

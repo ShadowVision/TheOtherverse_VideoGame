@@ -45,24 +45,24 @@ public class InputSetup : MonoBehaviour {
 				Keys.Joystick2Button1, Keys.Joystick2Button17,
 			},
 			{
-				Keys.Joy1Axis1Negative, Keys.Joy1Axis4Negative, Keys.Joy1Axis1Positive, Keys.Joy1Axis4Positive, 
-				Keys.Joy1Axis2Negative, Keys.Joy1Axis5Negative,Keys.Joy1Axis2Positive, Keys.Joy1Axis5Positive,
-				Keys.JoystickButton7, Keys.JoystickButton9,
-				Keys.JoystickButton0, Keys.JoystickButton16,
-				Keys.JoystickButton5, Keys.JoystickButton14,
-				Keys.JoystickButton4, Keys.JoystickButton13,
-				Keys.JoystickButton2, Keys.JoystickButton18,
-				Keys.JoystickButton1, Keys.JoystickButton17,
+				Keys.Joy3Axis1Negative, Keys.Joy3Axis4Negative, Keys.Joy3Axis1Positive, Keys.Joy3Axis4Positive, 
+				Keys.Joy3Axis2Negative, Keys.Joy3Axis5Negative,Keys.Joy3Axis2Positive, Keys.Joy3Axis5Positive,
+				Keys.Joystick3Button7, Keys.Joystick3Button9,
+				Keys.Joystick3Button0, Keys.Joystick3Button16,
+				Keys.Joystick3Button5, Keys.Joystick3Button14,
+				Keys.Joystick3Button4, Keys.Joystick3Button13,
+				Keys.Joystick3Button2, Keys.Joystick3Button18,
+				Keys.Joystick3Button1, Keys.Joystick3Button17,
 			},
 			{
-				Keys.Joy1Axis1Negative, Keys.Joy1Axis4Negative, Keys.Joy1Axis1Positive, Keys.Joy1Axis4Positive, 
-				Keys.Joy1Axis2Negative, Keys.Joy1Axis5Negative,Keys.Joy1Axis2Positive, Keys.Joy1Axis5Positive,
-				Keys.JoystickButton7, Keys.JoystickButton9,
-				Keys.JoystickButton0, Keys.JoystickButton16,
-				Keys.JoystickButton5, Keys.JoystickButton14,
-				Keys.JoystickButton4, Keys.JoystickButton13,
-				Keys.JoystickButton2, Keys.JoystickButton18,
-				Keys.JoystickButton1, Keys.JoystickButton17,
+				Keys.Joy4Axis1Negative, Keys.Joy4Axis4Negative, Keys.Joy4Axis1Positive, Keys.Joy4Axis4Positive, 
+				Keys.Joy4Axis2Negative, Keys.Joy4Axis5Negative,Keys.Joy4Axis2Positive, Keys.Joy4Axis5Positive,
+				Keys.Joystick4Button7, Keys.Joystick4Button9,
+				Keys.Joystick4Button0, Keys.Joystick4Button16,
+				Keys.Joystick4Button5, Keys.Joystick4Button14,
+				Keys.Joystick4Button4, Keys.Joystick4Button13,
+				Keys.Joystick4Button2, Keys.Joystick4Button18,
+				Keys.Joystick4Button1, Keys.Joystick4Button17,
 			},
 		};
 		string[,] dpk = defaultPlayerKeys;
@@ -85,6 +85,9 @@ public class InputSetup : MonoBehaviour {
 			cInput.SetKey(i+"Dodge",   dpk[i,14],dpk[i,15]);
 			cInput.SetKey(i+"Melee",   dpk[i,16],dpk[i,17]);
 			cInput.SetKey(i+"Ranged",  dpk[i,18],dpk[i,19]);
+			cInput.gravity = 1000000;
+			cInput.sensitivity = 1000000;
+
 		}
 	}
 }

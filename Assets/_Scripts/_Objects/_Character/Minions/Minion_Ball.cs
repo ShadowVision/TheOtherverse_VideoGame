@@ -50,9 +50,9 @@ public class Minion_Ball : AliveObject {
 			isActive = false;
 		}
 	}
-	public override void kill ()
+	protected override void permaDie ()
 	{
-		base.kill ();
+		base.permaDie ();
 		launch();
 	}
 }

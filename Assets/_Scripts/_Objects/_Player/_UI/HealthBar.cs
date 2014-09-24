@@ -20,6 +20,8 @@ public class HealthBar : MonoBehaviour {
 		healthPointsHolder = new GameObject ("HealthPoints");
 		healthPointsHolder.transform.parent = transform;
 		healthPointsHolder.transform.localPosition = new Vector3 (0, 0, 0);
+
+
 	}
 	void Start(){
 		init ((int)player.health);
@@ -48,8 +50,6 @@ public class HealthBar : MonoBehaviour {
 		//center health points
 		healthPointsHolder.transform.localPosition = new Vector3 (-numberOfHitPoints/2, 2f, 0);
 
-		showHealthPoints ();
-		Invoke ("hideHealthPoints", delayBeforeHideInSeconds);
 	}
 	
 	// Update is called once per frame
@@ -57,11 +57,9 @@ public class HealthBar : MonoBehaviour {
 	
 	}
 
-	public void unitTakeDamage(Vector4 knockbackPlusDamage){
-		float amount = knockbackPlusDamage.w;
-		int damage = (int)amount;
+	public void unitTakeDamage(Damager dmg){
 		showHealthPoints ();
-		for(int i=(int)player.health; i<player.health+damage; i++){
+		for(int i=(int)player.health; i<player.health+dmg.damageAmount; i++){
 			if(i >= 0 && i < points.Length)
 				points[i].animation.Play("Sprite_FadeOut");
 		}

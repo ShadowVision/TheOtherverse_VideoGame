@@ -9,6 +9,8 @@ public class PlayerController : Unit {
 
 
 	public float shieldTimeInSeconds = .25f;
+	public float shieldCooldownInSeconds = 4;
+	private bool canShield = true;
 	public bool isAttacking{
 		get{
 			return attacking;
@@ -17,11 +19,25 @@ public class PlayerController : Unit {
 
 	[HideInInspector]
 	public InputController input;
+	public GameObject clashEffectTemplate;
+
+	//Dodgeing
+	public int maxDodgesInAir = 2;
+	private int numberOfDodgesDone = 0;
 	public float dodgeTimeInSeconds=1;
 	public float dodgeDistance=1;
+	public float dodgeCooldownInSeconds = 1;
+	private bool canDodge = true;
+	
+	//wall jumping
+	public float wallSlideSpeed = .2f;
+	private bool isOnWall = false;
+	public float wallJumpHorizontalSpeed;
 
 	public LevelController level;
 	public GameMode game;
+
+	public SpriteRenderer colorSprite;
 
 	public Vector3 middlePosition{
 		get{
@@ -61,6 +77,7 @@ public class PlayerController : Unit {
 	void Update () {
 		base.Update();
 	}
+
 	public override void spawn ()
 	{
 		base.spawn ();
@@ -74,39 +91,55 @@ public class PlayerController : Unit {
 	}
 
 	public void shield(){
-		startShield ();
+		if(canShield){
+			startShield ();
+		}
 	}
 	new protected void startShield(){
 		if(!shielding){
+			canShield = false;
 			base.startShield();
-			input.lockMovement = true;
-			Invoke ("stopShield", shieldTimeInSeconds);
+			input.lockPlayerMovement(shieldTimeInSeconds);
+			Invoke("stopShield",shieldTimeInSeconds);
+			anim.setShield(true);
 		}
 	}
 	new protected void stopShield(){
 		base.stopShield();
-		input.lockMovement = false;
+		anim.setShield(false);
+		Invoke ("resetShield", shieldCooldownInSeconds);
+	}
+	private void resetShield(){
+		canShield = true;
 	}
 
 	public void startAttacking(string attackName = "NoName"){
 		if(attackName == "Sword"){
-			startShield();
+			shielding = true;
 		}
 		attacking = true;
+		anim.setAttack (true);
 		input.lockMovement = true;
 	}
 	public void stopAttacking(string attackName = "NoName"){
 		if(attackName == "Sword"){
-			stopShield();
+			shielding = false;
 		}
 		attacking = false;
+		anim.setAttack (false);
 		input.lockMovement = false;
 	}
 	
 	//dodgeing
 	public void dodge(){
-		if(!dodgeing){
+		if(!dodgeing && canDodge){
+			if(currentState == UnitState.AIR){
+				if(numberOfDodgesDone >= maxDodgesInAir){
+					return;
+				}
+			}
 			dodgeing = true;
+			anim.setDodge(true);
 			Vector3 dodgeDirection = input.dir;
 			Vector3 endPosition = transform.position+dodgeDirection*dodgeDistance;
 			//check if we are going to collid into a wall
@@ -118,23 +151,133 @@ public class PlayerController : Unit {
 			input.lockMovement = true;
 			linearAnim.OnFinish = endDodge;
 			linearAnim.animateTo (transform.position, endPosition, dodgeTimeInSeconds);
+			enterAir();
+			numberOfDodgesDone++;
 		}
 	}
 	private void endDodge(){
 		dodgeing = false;
 		rigidbody2D.isKinematic = false;
 		input.lockMovement = false;
+		anim.setDodge (false);
+		canDodge = false;
+		Invoke ("resetDodge", dodgeCooldownInSeconds);
+	}
+	private void resetDodge(){
+		canDodge = true;
 	}
 	public override void scoreKill ()
 	{
 		base.scoreKill ();
 		game.OnPlayerScoreKill ((PlayerController)this);
 	}
-
-
-	public override void kill ()
+	protected override void die ()
 	{
-		base.kill ();
+		base.die ();
+	}
+
+	protected override void permaDie ()
+	{
+		base.permaDie ();
 		game.OnPlayerLose ();
+	}
+
+
+	//WALL JUMPING
+	//detect collisions
+	void OnCollisionEnter2D(Collision2D coll){
+		if(currentState == UnitState.AIR && LayerMask.LayerToName(coll.gameObject.layer) == "Ground"){
+			hitWall (coll);
+		}
+	}
+	void OnCollisionStay2D(Collision2D coll) {
+		if(currentState == UnitState.AIR && LayerMask.LayerToName(coll.gameObject.layer) == "Ground"){
+			onWall(coll);
+		}
+	}
+	void OnCollisionExit2D(Collision2D coll){
+		if(currentState == UnitState.AIR && LayerMask.LayerToName(coll.gameObject.layer) == "Ground"){
+			leaveWall (coll);
+		}
+	}
+
+	public void hitWall(Collision2D coll){
+		Vector2 dir = coll.contacts[0].normal;
+		if(Mathf.Abs(dir.x) > Mathf.Abs(dir.y)){
+			//to the left or right
+			if(dir.x > 0){
+				//wall on the left
+				jumpDirModifier = new Vector3(wallJumpHorizontalSpeed,0,0);
+			}else{
+				//wall on the right
+				jumpDirModifier = new Vector3(-wallJumpHorizontalSpeed,0,0);
+			}
+		}else{
+			//above or below, don't trigger wall jump
+			return;
+		}
+
+		isOnWall = true;
+		endJump ();
+		numJumpsDone = 0;
+	}
+	private void onWall(Collision2D coll){
+		//rigidbody2D.AddForce(new Vector2(0,-wallSlideSpeed));
+		move (new Vector2 (0, -wallSlideSpeed));
+		endJump ();
+	}
+	private void leaveWall(Collision2D coll){
+		if(isOnWall){
+			isOnWall = false;
+			jumpDirModifier = new Vector3(0,0,0);
+		}
+	}
+	protected override void childJump (float strength)
+	{
+		if(isOnWall){
+			input.lockPlayerMovement(.35f);
+			Debug.Log("wall jumping: " + jumpDirModifier);
+			move (jumpDirModifier);
+		}
+	}
+
+	protected override void triggerRespawn ()
+	{
+		base.triggerRespawn ();
+		input.lockMovement = true;
+		anim.lose ();
+	}
+	protected override void respawn ()
+	{
+		input.lockMovement = false;
+		mesh.releaseMesh ();
+		base.respawn ();
+	}
+
+	protected override void hitGround ()
+	{
+		base.hitGround ();
+		numberOfDodgesDone = 0;
+	}
+	public void unitTakeDamage (Damager dmg){
+		if(isAttacking){
+			Debug.Log ("CLASH");
+			if(dmg.canKnockbackOnClash){
+				knockback (dmg.knockbackAmount*10);
+			}
+			dmg.clash();
+			Instantiate(clashEffectTemplate,transform.position,transform.rotation);
+		}
+	}
+
+	public void setColor(Color newColor){
+		colorSprite.color = newColor;
+	}
+
+	private void disableColliders(){
+		Collider2D[] col = GetComponents<Collider2D>();
+		foreach(Collider2D c in col){
+			c.enabled = false;
+		}
 	}
 }

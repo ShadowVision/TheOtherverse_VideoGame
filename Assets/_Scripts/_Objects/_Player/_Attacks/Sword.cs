@@ -8,15 +8,20 @@ public class Sword : Attack_AimedLinear {
 	public float minDamage = 1;
 	public float maxDamage = 2;
 	public float chargeTimeInSeconds = 1;
+	public float minKnockbackMod = .25f;
+
+	private Vector3 permSavedKnockback;
 
 	// Use this for initialization
-	void Start () {
+	new void Start () {
+		base.Start ();
 		attackOnPress = false;
+		permSavedKnockback = savedKnockback;
 	}
 	
 	// Update is called once per frame
-	void Update () {
-	
+	new void Update () {
+		base.Update ();
 	}
 
 	public override void attackPress ()
@@ -26,13 +31,25 @@ public class Sword : Attack_AimedLinear {
 	}
 	public void startCharge(){
 		startTime = Time.time;
+		player.anim.charge ();
+		player.input.lockMovement = true;
+		dir = player.currentDirection;
 	}
 	public override void attackRelease ()
 	{
-		attack ();
+		player.input.lockMovement = false;
+
 		float timeCharged = Mathf.Min(Time.time - startTime, chargeTimeInSeconds);
-		float damage = Mathf.Lerp (minDamage, maxDamage, timeCharged / chargeTimeInSeconds);
+		float d = timeCharged / chargeTimeInSeconds;
+		float damage = Mathf.Lerp (minDamage, maxDamage, d);
 		damage = Mathf.Floor (damage);
-		lastSpawnedItem.GetComponent<Damager> ().damageAmount = damage;
+
+		savedKnockback = Vector3.Lerp(permSavedKnockback*minKnockbackMod, permSavedKnockback,d);
+
+		attack ();
+		Damager dmg = lastSpawnedItem.GetComponent<Damager> ();
+		if(dmg != null){
+			dmg.damageAmount = damage;
+		}
 	}
 }

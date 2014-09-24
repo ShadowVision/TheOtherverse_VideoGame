@@ -19,12 +19,10 @@ public class Gun : Attack {
 	public override void attackPress ()
 	{
 		base.attackPress ();
-		player.input.lockMovement = true;
 	}
 	public override void attackRelease ()
 	{
 		base.attackRelease ();
-		player.input.lockMovement = false;
 	}
 	public override void attack ()
 	{

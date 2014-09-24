@@ -45,7 +45,7 @@ public class Attack_Kat_Snipe : Attack {
 			if(!player.facingRight){
 				hit.knockbackAmount.x *= -1;
 			}
-			hit.owner = player;
+			//hit.owner = player;
 			hit.direction = (Input.mousePosition - transform.position).normalized;
 			hit.distance = 100;
 			hit.fire();

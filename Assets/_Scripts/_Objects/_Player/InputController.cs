@@ -116,4 +116,12 @@ public class InputController : MonoBehaviour {
 	   }
 	}
 
+	public void lockPlayerMovement(float lengthInSeconds){
+		lockMovement = true;
+		Invoke ("resetMovementLock", lengthInSeconds);
+	}
+	private void resetMovementLock(){
+		lockMovement = false;
+	}
+
 }
